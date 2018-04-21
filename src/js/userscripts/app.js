@@ -1,3 +1,4 @@
+
 //! OBJECT INITIALIZERS
 // init movie object from class
 const movie = new Movie();
@@ -14,8 +15,9 @@ function loadYTplayer() {
 
 
 //! ON LOAD GET RESULTS
-//get movies on DOM load
+//get movies and genres on DOM load
 document.addEventListener('DOMContentLoaded', getMovies);
+document.addEventListener('DOMContentLoaded', getGenres);
 
 function getMovies(page) {
 
@@ -36,6 +38,30 @@ function getSeries(page) {
             console.log(topSeriesRes);
         })
         .catch(err => console.log(err));
+}
+
+//get genres -- called from navbar listener also
+function getGenres() {
+    
+    // on load call the api  -- get genres list send them to ui
+    if (document.querySelector('#movies.active-link')) {
+        
+        movie.genreListMovies()
+            .then(genreListMoviesRes => {
+                ui.printMovieGenres(genreListMoviesRes);
+                console.log(genreListMoviesRes);
+            })
+            .catch(err => console.log(err));
+
+    } else if (document.querySelector('#series.active-link')) {
+
+        movie.genreListSeries()
+            .then(genreListSeriesRes => {
+                ui.printSeriesGenres(genreListSeriesRes);
+                console.log(genreListSeriesRes);
+            })
+            .catch(err => console.log(err));
+    }
 }
 
 // event listener movies
@@ -121,6 +147,7 @@ document.getElementById('inlineFormInputGroup').addEventListener('keyup', (e) =>
     
     if (userText.length < 1 ) {
         getMovies();
+        document.getElementById('load-more').style.visibility = 'visible';
     }
 
     e.preventDefault();
@@ -138,6 +165,8 @@ document.querySelector('.navbar-nav').addEventListener('click', (e) => {
     seriesPage = 1; 
     //then set active link
     ui.activeLink(e);
+    //call genre function
+    getGenres(); 
     //set button to show if its hidden from searhc results
     document.getElementById('load-more').style.visibility = 'visible';
 });
@@ -149,10 +178,12 @@ let seriesPage = 1;
 // set page counter
 document.getElementById('load-more').addEventListener('click', () => {
 
+
   if (document.querySelector('#movies.active-link')) {
 
     moviesPage++;
-    getMovies(moviesPage);
+    getMovies(moviesPage); 
+    
 
   } else if (document.querySelector('#series.active-link')) {
 
@@ -163,9 +194,40 @@ document.getElementById('load-more').addEventListener('click', () => {
 });
 
 
-// document.getElementById('openNav').addEventListener('click', () => {
+//! PRINT BY GENRE
+// get access to genre list on nav 
+document.querySelector('.dropdown-menu').addEventListener('click', getByGenre);
 
-//     ui.BrowseByGenre();
+function getByGenre (e, page) {
+    
 
-// })
+    // fetch the data-genre of each link
+    const genreId = e.target.dataset.genre;
+
+
+    // on click of each sent data to api call
+    if (document.querySelector('#movies.active-link')) {
+
+        movie.movieGenre(page, genreId)
+            .then(movieGenreRes => {
+                ui.printMovieByGenre(movieGenreRes);
+                console.log(movieGenreRes);
+            })
+            .catch(err => console.log(err));
+
+    } else if (document.querySelector('#series.active-link')) {
+
+        movie.serieGenre(page, genreId)
+            .then(serieGenreRes => {
+                ui.printSeriesByGenres(serieGenreRes);
+                console.log(serieGenreRes);
+            })
+            .catch(err => console.log(err));
+
+    }
+
+};
+
+
+
 
