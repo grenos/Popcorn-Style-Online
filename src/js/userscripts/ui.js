@@ -31,7 +31,7 @@ class UI {
                 const votes = movie.vote_average; 
                 const id = movie.id;  
 
-                output += `
+                output = `
                         <div class="grid-item col-md-2">
                             <div class="grid-item-content">
                                 <img src="http://image.tmdb.org/t/p/w500/${img}">
@@ -46,7 +46,7 @@ class UI {
                             </div>
                         </div>
                     `;
-                document.querySelector('.grid').innerHTML = output;  
+                document.querySelector('.grid').innerHTML += output;  
         })
     }
 
@@ -79,7 +79,7 @@ class UI {
                 const votes = serie.vote_average;
                 const id = serie.id;
 
-                output += `
+                output = `
                     <div class="grid-item col-md-2">
                         <div class="grid-item-content">
                             <img src="http://image.tmdb.org/t/p/w500/${img}">
@@ -94,7 +94,7 @@ class UI {
                         </div>
                     </div>
                 `;
-                document.querySelector('.grid').innerHTML = output;   
+                document.querySelector('.grid').innerHTML += output;   
         });
     }
 
@@ -280,7 +280,7 @@ class UI {
             
             // set background in CSS
             const modalBg = document.querySelector('.myModal');
-            modalBg.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 20%,rgba(255,255,255,.15) 20%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.80) 40%,rgba(0,0,0,0.80) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`; 
+            modalBg.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 20%,rgba(255,255,255,.15) 20%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`; 
 
             // Tell youtube API to load player
             loadYTplayer();
@@ -357,7 +357,7 @@ class UI {
 
         // set background in CSS
         const modalBgS = document.querySelector('.myModal');
-        modalBgS.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 20%,rgba(255,255,255,.15) 20%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.80) 40%,rgba(0,0,0,0.80) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`;
+        modalBgS.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 20%,rgba(255,255,255,.15) 20%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`;
 
         // Tell youtube API to load player
         loadYTplayer();
@@ -474,7 +474,7 @@ class UI {
                 const votes = movie.vote_average; 
                 const id = movie.id;  
 
-                output += `
+                output = `
                         <div class="grid-item col-md-2">
                             <div class="grid-item-content">
                                 <img src="http://image.tmdb.org/t/p/w500/${img}">
@@ -489,7 +489,7 @@ class UI {
                             </div>
                         </div>
                     `;
-                document.querySelector('.grid').innerHTML = output;  
+                document.querySelector('.grid').innerHTML += output;  
         });
 
     }
@@ -524,7 +524,7 @@ class UI {
                 const votes = serie.vote_average;
                 const id = serie.id;
 
-                output += `
+                output = `
                     <div class="grid-item col-md-2" id="genre">
                         <div class="grid-item-content">
                             <img src="http://image.tmdb.org/t/p/w500/${img}">
@@ -539,7 +539,7 @@ class UI {
                         </div>
                     </div>
                 `;
-                document.querySelector('.grid').innerHTML = output;   
+                document.querySelector('.grid').innerHTML += output;   
         });
 
     }  
@@ -554,4 +554,4 @@ class UI {
 
 //TODO ////// loop through the modal response and eliminate movies and series without a video 
 
-//TODO //// append new page to old one
+// TODO /// RESPONSIVE

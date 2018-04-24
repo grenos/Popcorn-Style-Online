@@ -64,16 +64,21 @@ function getGenres() {
     }
 }
 
-// event listener movies
+// event listener movies link Navbar
 document.getElementById('movies').addEventListener('click', () => {
+    // call function
     getMovies();
+    // clear search input if it has letters inside
     ui.clearInput();
+    // clear dom from previews appended results
+    document.querySelector('.grid').innerHTML = '';
 });
 
-//event listener series
+//event listener series link Navbar
 document.getElementById('series').addEventListener('click', () => {
     getSeries();
     ui.clearInput();
+    document.querySelector('.grid').innerHTML = '';
 });
 
 
@@ -145,9 +150,13 @@ document.getElementById('inlineFormInputGroup').addEventListener('keyup', (e) =>
             })
     } 
     
+    // if less than 1 letter on search input
     if (userText.length < 1 ) {
         getMovies();
+        // load more button shows up again
         document.getElementById('load-more').style.visibility = 'visible';
+        // clear dom from previous movies
+        document.querySelector('.grid').innerHTML = '';
     }
 
     e.preventDefault();
@@ -171,27 +180,29 @@ document.querySelector('.navbar-nav').addEventListener('click', (e) => {
     document.getElementById('load-more').style.visibility = 'visible';
 });
 
+
+
+//! LOAD MORE BUTTON
 // globals for counter
 let moviesPage = 1;
 let seriesPage = 1;
-
-// set page counter
 document.getElementById('load-more').addEventListener('click', () => {
-
-
+    
   if (document.querySelector('#movies.active-link')) {
 
     moviesPage++;
     getMovies(moviesPage); 
+ 
     
-
   } else if (document.querySelector('#series.active-link')) {
 
     seriesPage++;
     getSeries(seriesPage);
 
   }
+  
 });
+
 
 
 //! PRINT BY GENRE
@@ -199,25 +210,29 @@ document.getElementById('load-more').addEventListener('click', () => {
 document.querySelector('.dropdown-menu').addEventListener('click', getByGenre);
 
 function getByGenre (e, page) {
-    
 
+
+    // clean dom from previous movies
+    document.querySelector('.grid').innerHTML = '';
+    // clean search input
+    ui.clearInput();
     // fetch the data-genre of each link
     const genreId = e.target.dataset.genre;
 
 
     // on click of each sent data to api call
-    if (document.querySelector('#movies.active-link')) {
-
-        movie.movieGenre(page, genreId)
+    if (document.querySelector('#movies.active-link')) {  //! movies genres
+        
+        movie.movieGenre(moviesPage, genreId)
             .then(movieGenreRes => {
                 ui.printMovieByGenre(movieGenreRes);
                 console.log(movieGenreRes);
             })
             .catch(err => console.log(err));
 
-    } else if (document.querySelector('#series.active-link')) {
-
-        movie.serieGenre(page, genreId)
+    } else if (document.querySelector('#series.active-link')) { //! series genres
+       
+        movie.serieGenre(seriesPage, genreId)
             .then(serieGenreRes => {
                 ui.printSeriesByGenres(serieGenreRes);
                 console.log(serieGenreRes);
