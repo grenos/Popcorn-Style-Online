@@ -143,7 +143,12 @@ document.getElementById('inlineFormInputGroup').addEventListener('keyup', (e) =>
         movie.searchCatalogue(userText)
             .then(searchCatalogueRes => {
                 ui.printSearchCat(searchCatalogueRes);
-                console.log(searchCatalogueRes);
+               
+                // if no results print ''no movie found''
+                if ( searchCatalogueRes.searchMovieCatalogueInfo.results < 1 && searchCatalogueRes.searchSeriesCatalogueInfo.results < 1) {
+                    ui.noMovieFound();
+                };
+
             })
             .catch(err => {
                 console.log(err);
@@ -159,6 +164,8 @@ document.getElementById('inlineFormInputGroup').addEventListener('keyup', (e) =>
         // clear dom from previous movies
         document.querySelector('.grid').innerHTML = '';
     }
+
+    
 
     e.preventDefault();
 })

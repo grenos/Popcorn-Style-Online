@@ -221,7 +221,7 @@ class UI {
     
     // //! MNODAL SECTION
     printModalMovie (searchMovieIdRes) {
-
+        
         //prevent scrolling under the modal
         document.querySelector('body').style.overflow = 'hidden';
     
@@ -245,7 +245,7 @@ class UI {
             `;
         });
 
-        //! CHECK FOR REFACTORING  <<<< >>>>
+        //! CHECK FOR REFACTORING  <<<< >>>> 
         if (searchMovieIdRes.movieDetailsInfo.videos.results < 1) {
 
             //shortcut find movie details
@@ -303,7 +303,7 @@ class UI {
                 
                 // set background in CSS
                 const modalBg = document.querySelector('.myModal');
-                modalBg.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 20%,rgba(255,255,255,.15) 20%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`; 
+                modalBg.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 15%,rgba(255,255,255,.15) 15%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`; 
 
         } else { //* <<< else
 
@@ -372,7 +372,7 @@ class UI {
                 
                 // set background in CSS
                 const modalBg = document.querySelector('.myModal');
-                modalBg.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 20%,rgba(255,255,255,.15) 20%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`; 
+                modalBg.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 15%,rgba(255,255,255,.15) 15%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`; 
 
                 // Tell youtube API to load player
                 loadYTplayer();
@@ -380,7 +380,7 @@ class UI {
     }
 
     printModalSerie (searchSerieIdRes) {
-
+        
         //prevent scrolling under the modal
         document.querySelector('body').style.overflow = 'hidden';
 
@@ -389,6 +389,12 @@ class UI {
         let actors = '';
         cast.forEach( cast => {
              actors += cast.name + ', ';
+        });
+
+        const getCreators = searchSerieIdRes.created_by;
+        let creators = '';
+        getCreators.forEach( person => {
+             creators += person.name + ', ';
         });
 
         // loop through the genres and print individualy 
@@ -434,7 +440,7 @@ class UI {
                     <div class="col-md-5 ml-auto list">
                     <ul class="list-group">
                         <li class="list-group-item title">Series Info:</li>
-                        <li class="list-group-item ml-5"><p>Creator: <span>${searchSerieIdRes.created_by[0].name}</span></p></li>
+                        <li class="list-group-item ml-5"><p>Creators: <span>${creators}</span></p></li>
                         <li class="list-group-item ml-5"><p>Network: <span>${searchSerieIdRes.networks[0].name}</span></p></li>
                         <li class="list-group-item ml-5"><p>Language: <span>${lang}</span></p></li>
                         <li class="list-group-item ml-5"><p>Series Started: <span>${firstD}</span> Latest Air Date: <span>${lastD}</span></p></li>
@@ -451,7 +457,7 @@ class UI {
 
             // set background in CSS
             const modalBgS = document.querySelector('.myModal');
-            modalBgS.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 20%,rgba(255,255,255,.15) 20%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`;
+            modalBgS.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 15%,rgba(255,255,255,.15) 15%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`;
 
         } else {
 
@@ -488,7 +494,7 @@ class UI {
                 <div class="col-md-5 ml-auto list">
                 <ul class="list-group">
                     <li class="list-group-item title">Series Info:</li>
-                    <li class="list-group-item ml-5"><p>Creator: <span>${searchSerieIdRes.created_by[0].name}</span></p></li>
+                    <li class="list-group-item ml-5"><p>Creators: <span>${creators}</span></p></li>
                     <li class="list-group-item ml-5"><p>Network: <span>${searchSerieIdRes.networks[0].name}</span></p></li>
                     <li class="list-group-item ml-5"><p>Language: <span>${lang}</span></p></li>
                     <li class="list-group-item ml-5"><p>Series Started: <span>${firstD}</span> Latest Air Date: <span>${lastD}</span></p></li>
@@ -511,7 +517,7 @@ class UI {
 
         // set background in CSS
         const modalBgS = document.querySelector('.myModal');
-        modalBgS.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 20%,rgba(255,255,255,.15) 20%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`;
+        modalBgS.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 15%,rgba(255,255,255,.15) 15%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`;
 
         // Tell youtube API to load player
         loadYTplayer();
@@ -538,6 +544,25 @@ class UI {
     //! NAVBAR SECTION
     clearInput () {
         document.getElementById('inlineFormInputGroup').value = '';
+    }
+
+    noMovieFound () {
+        //clear results
+        document.querySelector('.grid').innerHTML = '';
+
+        //print message
+        let output = '';
+        
+        output = `
+            <div class="container text-center">
+                <div class="no-movie-found">
+                    <h2>Ops! We couldn't find that! Try another one! :)</h2>
+                    <img src="https://media.giphy.com/media/323W9jGIsDzUFUuOtd/giphy.gif">
+                </div>
+            </div>
+        `;
+
+        document.querySelector('.grid').innerHTML = output;
     }
 
     activeLink (e) {
