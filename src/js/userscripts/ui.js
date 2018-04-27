@@ -222,6 +222,7 @@ class UI {
     // //! MNODAL SECTION
     printModalMovie (searchMovieIdRes) {
         
+
         //prevent scrolling under the modal
         document.querySelector('body').style.overflow = 'hidden';
     
@@ -233,7 +234,7 @@ class UI {
         //loop through the cast and output it as one string 
         let actors = '';
         cast.forEach( cast => {
-             actors += cast.name + ', ';
+             actors += cast.name + ', ';    
         });
 
         // loop through the genres and print individualy 
@@ -244,10 +245,7 @@ class UI {
                 <span class="badge badge-pill badge-light">${genre.name}</span> 
             `;
         });
-
-        //! CHECK FOR REFACTORING  <<<< >>>> 
-        if (searchMovieIdRes.movieDetailsInfo.videos.results < 1) {
-
+  
             //shortcut find movie details
             const movieInfo = searchMovieIdRes.movieDetailsInfo;
 
@@ -265,68 +263,6 @@ class UI {
                 tag = movieInfo.tagline,
                 votes = movieInfo.vote_average;
                 
-                let output = '';
-
-                output = `
-                    <div class="myModal">
-                        <i class="far fa-times-circle" id="close-modal" onclick="closeModal()"></i>
-                        <a href="http://www.imdb.com/title/${imdb}" target="_blank"><i class="fab fa-imdb"></i></a>
-                        <a href="http://www.amazon.com/s/ref=nb_ss_d?tag=chriscoyier-20&url=search-alias%3Ddvd&field-keywords=${title}" target="_blank"><i class="fab fa-amazon"></i></a>
-                        <a href="http://www.netflix.com/Search?lnkctr=srchrd-ips&v1=${title}" target="_blank"><span class="icon-netflix"></span></a>
-                        <a href="${site}" target="_blank"><i class="fas fa-globe"></i></a>
-                        <div class="col-md-12 title">
-                            <h2 class="modal-title">${title}</h2>
-                            <h4 class="modal-title">${tag}</h4>
-                        </div>
-                        <div class="col-md-8 ml-auto text">
-                            <p class="overview"><span>Overview:</span> ${overview}</p>
-                        </div>
-                        <div class="col-md-6 ml-auto text">
-                            <p class="actors"><span>Cast:</span> ${actors}</p>
-                        </div>
-                        <div class="col-md-5 ml-auto list">
-                        <ul class="list-group">
-                            <li class="list-group-item title">Movie Info:</li>
-                            <li class="list-group-item ml-5"><p>Language: <span>${lang}</span></p></li>
-                            <li class="list-group-item ml-5"><p>Release Date: <span>${date}</span></p></li>
-                            <li class="list-group-item ml-5"><p>Runtime: <span>${run}</span> minutes</p></li>
-                            <li class="list-group-item ml-5"><p>Popularity: <span><i class="fas fa-heart fa-sm"></i> ${votes}</span> votes (${pop})</p></li>
-                            <li class="list-group-item ml-5"><p>Budget: $<span>${budget}</span></p></li>
-                        </ul>
-                        </div>
-                        <div class="col-md-5 ml-auto genres">
-                            <div class="ml-5">${genres}</div> 
-                        </div>
-                    </div>
-                `;
-                document.querySelector('.modal-container').innerHTML = output;
-                
-                // set background in CSS
-                const modalBg = document.querySelector('.myModal');
-                modalBg.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 15%,rgba(255,255,255,.15) 15%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`; 
-
-        } else { //* <<< else
-
-            //shortcut find movie details
-            const movieInfo = searchMovieIdRes.movieDetailsInfo;
-
-            const bDrop = movieInfo.backdrop_path, 
-                budget = movieInfo.budget,
-                site = movieInfo.homepage, 
-                imdb = movieInfo.imdb_id, 
-                lang = movieInfo.original_language, 
-                title = movieInfo.title, 
-                overview = movieInfo.overview, 
-                pop = movieInfo.popularity,
-                img = movieInfo.poster_path,
-                date = movieInfo.release_date.substring(0, 4), 
-                run = movieInfo.runtime, 
-                tag = movieInfo.tagline,
-                votes = movieInfo.vote_average;
-                
-                
-            const video = movieInfo.videos.results[0].key;
-            
             
                 let output = '';
 
@@ -360,12 +296,13 @@ class UI {
                         <div class="col-md-5 ml-auto genres">
                             <div class="ml-5">${genres}</div> 
                         </div>
-                        <div class="col-md-5 ml-auto genres">
-                            <button type="button" class="btn btn-outline-light" onclick="openVideo()">Trailer</button> 
-                        </div>
-                        <div class="col-md-12 mx-auto video-container">
-                            <iframe src="https://www.youtube.com/embed/${video}?enablejsapi=1&fs=0&iv_load_policy=3&rel=0&showinfo=0" id="trailer-player" frameborder="0" allowfullscreen class="video"></iframe> 
-                        </div> 
+                        ${searchMovieIdRes.movieDetailsInfo.videos.results < 1 ? '' :  //! if video or no video
+                            `<div class="col-md-5 ml-auto genres">
+                                <button type="button" class="btn btn-outline-light" onclick="openVideo()">Trailer</button> 
+                            </div>
+                            <div class="col-md-12 mx-auto video-container">
+                                <iframe src="https://www.youtube.com/embed/${movieInfo.videos.results[0].key}?enablejsapi=1&fs=0&iv_load_policy=3&rel=0&showinfo=0" id="trailer-player" frameborder="0" allowfullscreen class="video"></iframe> 
+                            </div> `}      
                     </div>
                 `;
                 document.querySelector('.modal-container').innerHTML = output;
@@ -376,7 +313,6 @@ class UI {
 
                 // Tell youtube API to load player
                 loadYTplayer();
-        } 
     }
 
     printModalSerie (searchSerieIdRes) {
@@ -406,68 +342,12 @@ class UI {
             `;
         });
 
-        if (searchSerieIdRes.videos.results < 1) {
-
-            const bDrop = searchSerieIdRes.backdrop_path, 
-                name = searchSerieIdRes.name, 
-                site = searchSerieIdRes.homepage, 
-                lang = searchSerieIdRes.original_language, 
-                overview = searchSerieIdRes.overview, 
-                pop = searchSerieIdRes.popularity, 
-                votes = searchSerieIdRes.vote_average, 
-                firstD = searchSerieIdRes.first_air_date.substring(0, 4),
-                lastD = searchSerieIdRes.last_air_date;
-                
-
-            let output = '';
-
-            output = `
-                <div class="myModal">
-                <i class="far fa-times-circle" id="close-modal" onclick="closeModal()"></i>
-                <a href="http://www.imdb.com/find?s=tt&q=${name}" target="_blank"><i class="fab fa-imdb"></i></a>
-                <a href="http://www.amazon.com/s/ref=nb_ss_d?tag=chriscoyier-20&url=search-alias%3Ddvd&field-keywords=${name}" target="_blank"><i class="fab fa-amazon"></i></a>
-                <a href="http://www.netflix.com/Search?lnkctr=srchrd-ips&v1=${name}" target="_blank"><span class="icon-netflix"></span></a>
-                <a href="${site}" target="_blank"><i class="fas fa-globe"></i></a>
-                    <div class="col-md-12 title">
-                        <h2 class="modal-title">${name}</h2>
-                    </div>
-                    <div class="col-md-8 ml-auto text">
-                        <p class="overview"><span>Overview:</span> ${overview}</p>
-                    </div>
-                    <div class="col-md-6 ml-auto text">
-                        <p class="actors"><span>Cast:</span> ${actors}</p>
-                    </div>
-                    <div class="col-md-5 ml-auto list">
-                    <ul class="list-group">
-                        <li class="list-group-item title">Series Info:</li>
-                        <li class="list-group-item ml-5"><p>Creators: <span>${creators}</span></p></li>
-                        <li class="list-group-item ml-5"><p>Network: <span>${searchSerieIdRes.networks[0].name}</span></p></li>
-                        <li class="list-group-item ml-5"><p>Language: <span>${lang}</span></p></li>
-                        <li class="list-group-item ml-5"><p>Series Started: <span>${firstD}</span> Latest Air Date: <span>${lastD}</span></p></li>
-                        <li class="list-group-item ml-5"><p>Runtime: ~ <span>${searchSerieIdRes.episode_run_time[0]}</span> minutes</p></li>
-                        <li class="list-group-item ml-5"><p>Popularity: <span><i class="fas fa-heart fa-sm"></i> ${votes}</span> votes (${pop})</p></li>
-                    </ul>
-                    </div>
-                    <div class="col-md-5 ml-auto genres">
-                        <div class="ml-5">${genres}</div> 
-                    </div>
-                </div>
-            `;
-            document.querySelector('.modal-container').innerHTML = output;
-
-            // set background in CSS
-            const modalBgS = document.querySelector('.myModal');
-            modalBgS.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0,1) 0%,rgba(0,0,0,1) 15%,rgba(255,255,255,.15) 15%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.75) 100%), url(http://image.tmdb.org/t/p/w1280/${bDrop})`;
-
-        } else {
-
         const bDrop = searchSerieIdRes.backdrop_path, 
               name = searchSerieIdRes.name, 
               site = searchSerieIdRes.homepage, 
               lang = searchSerieIdRes.original_language, 
               overview = searchSerieIdRes.overview, 
               pop = searchSerieIdRes.popularity, 
-              video = searchSerieIdRes.videos.results[0].key, 
               votes = searchSerieIdRes.vote_average, 
               firstD = searchSerieIdRes.first_air_date.substring(0, 4),
               lastD = searchSerieIdRes.last_air_date;
@@ -505,12 +385,13 @@ class UI {
                 <div class="col-md-5 ml-auto genres">
                     <div class="ml-5">${genres}</div> 
                 </div>
-                <div class="col-md-5 ml-auto genres">
-                    <button type="button" class="btn btn-outline-light" onclick="openVideo()">Trailer</button> 
-                </div>
-                <div class="col-md-12 mx-auto video-container">
-                    <iframe src="https://www.youtube.com/embed/${video}?enablejsapi=1&fs=0&iv_load_policy=3&rel=0&showinfo=0" id="trailer-player" frameborder="0" allowfullscreen class="video"></iframe> 
-                </div> 
+                ${searchSerieIdRes.videos.results < 1 ? '' : ` //! if video or no video
+                    <div class="col-md-5 ml-auto genres">
+                        <button type="button" class="btn btn-outline-light" onclick="openVideo()">Trailer</button> 
+                    </div>
+                    <div class="col-md-12 mx-auto video-container">
+                        <iframe src="https://www.youtube.com/embed/${searchSerieIdRes.videos.results[0].key}?enablejsapi=1&fs=0&iv_load_policy=3&rel=0&showinfo=0" id="trailer-player" frameborder="0" allowfullscreen class="video"></iframe> 
+                    </div> `}      
             </div>
         `;
         document.querySelector('.modal-container').innerHTML = output;
@@ -522,7 +403,7 @@ class UI {
         // Tell youtube API to load player
         loadYTplayer();
 
-        }
+        
     }
 
     clearModal () {

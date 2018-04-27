@@ -220,6 +220,9 @@ p {
     color: #274046;
     -webkit-transition: .1s;
     transition: .1s; }
+  .myModal .overview {
+    max-height: 150px;
+    overflow: scroll; }
   .myModal h2 {
     color: white;
     font-size: 3.2rem;
@@ -310,3 +313,19 @@ p {
     opacity: 0; }
   to {
     opacity: 1; } }
+
+@-webkit-keyframes zoomIn {
+  from {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5); }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes zoomIn {
+  from {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5); }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }

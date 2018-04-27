@@ -197,12 +197,16 @@ let seriesPage = 1;
 
 document.getElementById('load-more').addEventListener('click', loadMore)
     
-function loadMore () {
+function loadMore (e) {
+
+    e.preventDefault();
+    e.stopPropagation();
 
   if (document.querySelector('#movies.active-link')) {
 
     moviesPage++;
     getMovies(moviesPage); 
+    //printByGenre(undefined, moviesPage);
     
   } else if (document.querySelector('#series.active-link')) {
 
