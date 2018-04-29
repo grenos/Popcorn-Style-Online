@@ -222,7 +222,7 @@ class UI {
     // //! MNODAL SECTION
     printModalMovie (searchMovieIdRes) {
         
-
+        //console.log(searchMovieIdRes);
         //prevent scrolling under the modal
         document.querySelector('body').style.overflow = 'hidden';
     
@@ -296,13 +296,21 @@ class UI {
                         <div class="col-md-5 ml-auto genres">
                             <div class="ml-5">${genres}</div> 
                         </div>
-                        ${searchMovieIdRes.movieDetailsInfo.videos.results < 1 ? '' :  //! if video or no video
+                        ${searchMovieIdRes.movieDetailsInfo.videos.results < 1 ? '' :  
                             `<div class="col-md-5 ml-auto genres">
-                                <button type="button" class="btn btn-outline-light" onclick="openVideo()">Trailer</button> 
+                                <button type="button" class="btn btn-outline-light trailer-btn" onclick="openVideo()">Trailer</button> 
                             </div>
                             <div class="col-md-12 mx-auto video-container">
                                 <iframe src="https://www.youtube.com/embed/${movieInfo.videos.results[0].key}?enablejsapi=1&fs=0&iv_load_policy=3&rel=0&showinfo=0" id="trailer-player" frameborder="0" allowfullscreen class="video"></iframe> 
-                            </div> `}      
+                            </div> `} 
+                            
+                            ${searchMovieIdRes.movieDetailsInfo.similar.results < 1 ? '' : `
+                            <div class="mx-auto col-md-1">
+                                <button type="button" class="btn btn-outline-light similar-btn" onclick="ui.openSimilar()"> Similar</button> 
+                            </div>
+                            <div class="container-fluid carousel-container">
+                                <div class="print-slick" onclick="printSimilar(${window.event})"></div>
+                            </div>`}
                     </div>
                 `;
                 document.querySelector('.modal-container').innerHTML = output;
@@ -316,7 +324,7 @@ class UI {
     }
 
     printModalSerie (searchSerieIdRes) {
-        
+        //console.log(searchSerieIdRes);
         //prevent scrolling under the modal
         document.querySelector('body').style.overflow = 'hidden';
 
@@ -350,7 +358,8 @@ class UI {
               pop = searchSerieIdRes.popularity, 
               votes = searchSerieIdRes.vote_average, 
               firstD = searchSerieIdRes.first_air_date.substring(0, 4),
-              lastD = searchSerieIdRes.last_air_date;
+              lastD = searchSerieIdRes.last_air_date,
+              id = searchSerieIdRes.id;
               
 
         let output = '';
@@ -385,13 +394,21 @@ class UI {
                 <div class="col-md-5 ml-auto genres">
                     <div class="ml-5">${genres}</div> 
                 </div>
-                ${searchSerieIdRes.videos.results < 1 ? '' : ` //! if video or no video
+                ${searchSerieIdRes.videos.results < 1 ? '' : ` 
                     <div class="col-md-5 ml-auto genres">
-                        <button type="button" class="btn btn-outline-light" onclick="openVideo()">Trailer</button> 
+                        <button type="button" class="btn btn-outline-light trailer-btn" onclick="openVideo()">Trailer</button> 
                     </div>
                     <div class="col-md-12 mx-auto video-container">
                         <iframe src="https://www.youtube.com/embed/${searchSerieIdRes.videos.results[0].key}?enablejsapi=1&fs=0&iv_load_policy=3&rel=0&showinfo=0" id="trailer-player" frameborder="0" allowfullscreen class="video"></iframe> 
-                    </div> `}      
+                    </div> `}  
+                
+                ${searchSerieIdRes.similar.results < 1 ? '' : `
+                    <div class="mx-auto col-md-1">
+                        <button type="button" class="btn btn-outline-light similar-btn" onclick="ui.openSimilar()"> Similar</button> 
+                    </div>
+                    <div class="container-fluid carousel-container" onclick="printSimilar(${window.event})">
+                        <div class="print-slick"></div>
+                    </div>`}
             </div>
         `;
         document.querySelector('.modal-container').innerHTML = output;
@@ -402,8 +419,43 @@ class UI {
 
         // Tell youtube API to load player
         loadYTplayer();
+    }
 
+    //! SIMILAR 
+    printSimilarMovies (searchMovieIdRes) {
+       
+        let poster = '';
+        searchMovieIdRes.movieDetailsInfo.similar.results.forEach( movie => {
+            poster += `
+                <div class="slick-item">
+                    <img src="http://image.tmdb.org/t/p/w154/${movie.poster_path}"  id="${movie.id}" data-id="movie" alt="Similar">
+                </div>
+            `;
+        }) 
         
+        document.querySelector('.print-slick').innerHTML = poster;
+        
+    }
+
+    printSimilarSeries (searchSerieIdRes) {
+        
+        let poster = '';
+        searchSerieIdRes.similar.results.forEach( serie => {
+            poster += `
+                <div class="slick-item">
+                    <img src="http://image.tmdb.org/t/p/w154/${serie.poster_path}"  id="${serie.id}" data-id="serie" alt="Similar">
+                </div>
+            `;
+        })
+        
+        document.querySelector('.print-slick').innerHTML = poster;
+        
+    }
+
+    openSimilar () {
+
+        document.querySelector('.similar-btn').classList.toggle('sm-btn-active');
+        document.querySelector('.carousel-container').classList.toggle('car-cont-active');
     }
 
     clearModal () {
@@ -437,7 +489,7 @@ class UI {
         output = `
             <div class="container text-center">
                 <div class="no-movie-found">
-                    <h2>Ops! We couldn't find that! Try another one! :)</h2>
+                    <h2>Wops! We couldn't find that! Try another one! :)</h2>
                     <img src="https://media.giphy.com/media/323W9jGIsDzUFUuOtd/giphy.gif">
                 </div>
             </div>
@@ -451,7 +503,7 @@ class UI {
         const series = document.getElementById('series');
         const clicked = e.target.id;
         
-        // if movies is clicked add class on a and i and remove from series
+        // if movies is clicked add class and remove from series
         if (clicked === 'movies') {
 
             series.classList.remove('active-link');
@@ -465,6 +517,9 @@ class UI {
         }
     }
 
+
+
+    //! PRINT BY GENRE
     printMovieGenres (genreListMoviesRes) {
 
         const movieGenre = genreListMoviesRes.genres;
@@ -501,8 +556,6 @@ class UI {
         });
     }
 
-
-    //! PRINT BY GENRE
     printMovieByGenre (movieGenreRes) {
 
         let output = ''; 
