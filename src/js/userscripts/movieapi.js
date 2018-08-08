@@ -1,115 +1,136 @@
 class Movie {
-    constructor(page) {
-        this.apikey = 'fdde855cd4b047fb1a0ea24a7ec58362';
-    }
-   
+  constructor(page) {
+    this.apikey = 'fdde855cd4b047fb1a0ea24a7ec58362';
+  }
 
-    //! TOP MOVIES AND SERIES
-    async topMovies (page) {
+  //! TOP MOVIES AND SERIES
+  async topMovies(page) {
+    const topMoviesRes = await fetch(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${
+        this.apikey
+      }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`
+    );
+    const topMoviesInfo = await topMoviesRes.json();
+    return topMoviesInfo;
+  }
 
-        const topMoviesRes = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`);
+  async topSeries(page) {
+    const topSeriesRes = await fetch(
+      `https://api.themoviedb.org/3/discover/tv?api_key=${
+        this.apikey
+      }&language=en-US&sort_by=popularity.desc&page=${page}`
+    );
 
-        const topMoviesInfo = await topMoviesRes.json();
-        return topMoviesInfo;  
-    }
+    const topSeriesInfo = await topSeriesRes.json();
+    return topSeriesInfo;
+  }
 
-    async topSeries (page) {
-        const topSeriesRes = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${this.apikey}&language=en-US&sort_by=popularity.desc&page=${page}`);
+  //! SEARCH MOVIES AND SERIES
+  async searchCatalogue(userText) {
+    const searchMovieCatalogueRes = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${
+        this.apikey
+      }&language=en-US&sort_by=popularity.desc&include_adult=false&query=${userText}`
+    );
 
-        const topSeriesInfo = await topSeriesRes.json();
-        return topSeriesInfo;
-    }
+    const searchSeriesCatalogueRes = await fetch(
+      `https://api.themoviedb.org/3/search/tv?api_key=${
+        this.apikey
+      }&language=en-US&sort_by=popularity.desc&include_adult=false&query=${userText}`
+    );
 
+    const searchMovieCatalogueInfo = await searchMovieCatalogueRes.json();
+    const searchSeriesCatalogueInfo = await searchSeriesCatalogueRes.json();
 
-    //! SEARCH MOVIES AND SERIES
-    async searchCatalogue (userText) {
-        const searchMovieCatalogueRes = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&query=${userText}`);
+    return {
+      searchMovieCatalogueInfo,
+      searchSeriesCatalogueInfo
+    };
+  }
 
-        const searchSeriesCatalogueRes = await fetch(`https://api.themoviedb.org/3/search/tv?api_key=${this.apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&query=${userText}`);
+  //! GET MOVIE AND SERIES AND CREDITS BY ID  <<<< MODAL >>>>>
+  async searchMovieId(clickId) {
+    const movieDetailsRes = await fetch(
+      `https://api.themoviedb.org/3/movie/${clickId}?api_key=${
+        this.apikey
+      }&language=en-US&append_to_response=videos,similar`
+    );
 
-        const searchMovieCatalogueInfo = await searchMovieCatalogueRes.json();
-        const searchSeriesCatalogueInfo = await searchSeriesCatalogueRes.json();
+    const movieCastRes = await fetch(
+      `https://api.themoviedb.org/3/movie/${clickId}/credits?api_key=${
+        this.apikey
+      }&language=en-US`
+    );
 
-        return {
-            searchMovieCatalogueInfo,
-            searchSeriesCatalogueInfo
-        }
+    const movieDetailsInfo = await movieDetailsRes.json();
+    const movieCastInfo = await movieCastRes.json();
 
-    }
+    return {
+      movieDetailsInfo,
+      movieCastInfo
+    };
+  }
 
+  async searchSerieId(clickId) {
+    const serieDetailsRes = await fetch(
+      `https://api.themoviedb.org/3/tv/${clickId}?api_key=${
+        this.apikey
+      }&language=en-US&append_to_response=videos,similar,credits`
+    );
 
-    //! GET MOVIE AND SERIES AND CREDITS BY ID  <<<< MODAL >>>>>
-    async searchMovieId (clickId) {
-        const movieDetailsRes = await fetch(`https://api.themoviedb.org/3/movie/${clickId}?api_key=${this.apikey}&language=en-US&append_to_response=videos,similar`);
+    const serieDetailsInfo = await serieDetailsRes.json();
+    return serieDetailsInfo;
+  }
 
-        const movieCastRes = await fetch(`https://api.themoviedb.org/3/movie/${clickId}/credits?api_key=${this.apikey}&language=en-US`);
+  //! GET THE GENRES
+  async genreListMovies() {
+    const genreListMoviesRes = await fetch(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=fdde855cd4b047fb1a0ea24a7ec58362&language=en-US`
+    );
 
-        const movieDetailsInfo = await movieDetailsRes.json();
-        const movieCastInfo = await movieCastRes.json();
+    const genreListMoviesInfo = await genreListMoviesRes.json();
+    return genreListMoviesInfo;
+  }
 
-        return {
-            movieDetailsInfo,
-            movieCastInfo
-        }
-    }
+  async genreListSeries() {
+    const genreListSeriesRes = await fetch(
+      `https://api.themoviedb.org/3/genre/tv/list?api_key=fdde855cd4b047fb1a0ea24a7ec58362&language=en-US`
+    );
 
-    async searchSerieId (clickId) {
-        const serieDetailsRes = await fetch(`https://api.themoviedb.org/3/tv/${clickId}?api_key=${this.apikey}&language=en-US&append_to_response=videos,similar,credits`);
+    const genreListSeriesInfo = await genreListSeriesRes.json();
+    return genreListSeriesInfo;
+  }
 
-        const serieDetailsInfo = await serieDetailsRes.json();
-        return serieDetailsInfo;
-    }
+  //! MOVIES AND SERIES BY GENRE
+  async movieGenre(page, genreId) {
+    const movieGenreRes = await fetch(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${
+        this.apikey
+      }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreId}`
+    );
 
+    const movieGenreInfo = await movieGenreRes.json();
+    return movieGenreInfo;
+  }
 
-    //! GET THE GENRES
-    async genreListMovies () {
+  async serieGenre(page, genreId) {
+    const serieGenreRes = await fetch(
+      `https://api.themoviedb.org/3/discover/tv?api_key=${
+        this.apikey
+      }&language=en-US&sort_by=popularity.desc&page=${page}&with_genres=${genreId}`
+    );
 
-        const genreListMoviesRes = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=fdde855cd4b047fb1a0ea24a7ec58362&language=en-US`);
+    const serieGenreInfo = await serieGenreRes.json();
+    return serieGenreInfo;
+  }
 
-        const genreListMoviesInfo = await genreListMoviesRes.json();
-        return genreListMoviesInfo;
+  //! ACTOR DETAILS
+  async getActors(actorId) {
+    const getActorsRes = await fetch(
+      `https://api.themoviedb.org/3/person/${actorId}?api_key=fdde855cd4b047fb1a0ea24a7ec58362&language=en-US&append_to_response=combined_credits,external_ids,images`
+    );
 
-    }
-
-    async genreListSeries () {
-
-        const genreListSeriesRes = await fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=fdde855cd4b047fb1a0ea24a7ec58362&language=en-US`);
-
-        const genreListSeriesInfo = await genreListSeriesRes.json();
-        return genreListSeriesInfo;
-
-    }
-
-
-     //! MOVIES AND SERIES BY GENRE
-     async movieGenre (page, genreId) {
-
-        const movieGenreRes = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreId}`);
-
-        const movieGenreInfo = await movieGenreRes.json();
-        return movieGenreInfo;  
-    }
-
-    async serieGenre (page, genreId) {
-        const serieGenreRes = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${this.apikey}&language=en-US&sort_by=popularity.desc&page=${page}&with_genres=${genreId}`);
-
-        const serieGenreInfo = await serieGenreRes.json();
-        return serieGenreInfo;
-    }
-
-
-
-    //! ACTOR DETAILS
-    async getActors (actorId) {
-
-        const getActorsRes = await fetch(`https://api.themoviedb.org/3/person/${actorId}?api_key=fdde855cd4b047fb1a0ea24a7ec58362&language=en-US&append_to_response=combined_credits,external_ids,images`);
-
-        const getActorsInfo = await getActorsRes.json();
-        return getActorsInfo;
-
-    }
-
-    
+    const getActorsInfo = await getActorsRes.json();
+    return getActorsInfo;
+  }
 }
-
-
