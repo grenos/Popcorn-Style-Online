@@ -701,7 +701,7 @@ class UI {
       movieCredit += `
             <li class="list-group-item credit d-flex justify-content-between align-items-center">
                 <span class="cr-title">${title}<br><span class="role">${role}</span></span> 
-                <span class="badge badge-light badge-pill">${years}</span>
+                <span class="badge badge-light badge-pill badge-year">${years}</span>
             </li>    
             `;
     });
@@ -800,12 +800,16 @@ class UI {
                 <i class="far fa-times-circle" id="close-modal" onclick="closeModal()"></i>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12 title">
+                        <div class="col-md-12 title flex-col">
+
                             <h2 class="modal-title">${name} </h2>
-                            <h4><span> DOB: </span>${dob} <span> POB: </span> ${
-      hTown != undefined ? hTown : 'n/a'
-    }</h4>
-                        </div>
+                          
+                              <h4><span> DOB: </span>${dob} </h4>
+                              
+                              <h4>  <span> POB: </span> ${
+                                hTown != undefined ? hTown : 'n/a'
+                              }</h4>
+                       </div>
                         <div class="col-md-6 actor-pic">
                             ${pic ? actorPic : placeHold} 
                             <div class="social-icons">

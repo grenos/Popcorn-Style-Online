@@ -108,7 +108,7 @@ function popupReady() {
 //! ON LOAD GET RESULTS
 //get movies and genres on DOM load
 document.addEventListener('DOMContentLoaded', getMovies);
-document.addEventListener('DOMContentLoaded', getGenres);
+//document.addEventListener('DOMContentLoaded', getGenres);
 
 function getMovies(page) {
   movie
@@ -130,27 +130,25 @@ function getSeries(page) {
     .catch(err => console.log(err));
 }
 
-//get genres -- called on document load
-function getGenres() {
-  // on load call the api  -- get genres list send them to ui
-  if (document.querySelector('#movies.active-link')) {
-    movie
-      .genreListMovies()
-      .then(genreListMoviesRes => {
-        ui.printMovieGenres(genreListMoviesRes);
-        //console.log(genreListMoviesRes);
-      })
-      .catch(err => console.log(err));
-  } else if (document.querySelector('#series.active-link')) {
-    movie
-      .genreListSeries()
-      .then(genreListSeriesRes => {
-        ui.printSeriesGenres(genreListSeriesRes);
-        //console.log(genreListSeriesRes);
-      })
-      .catch(err => console.log(err));
-  }
-}
+// //get genres -- called on document load
+// function getGenres() {
+//   // on load call the api  -- get genres list send them to ui
+//   if (document.querySelector('#movies.active-link')) {
+//     movie
+//       .genreListMovies()
+//       .then(genreListMoviesRes => {
+//         ui.printMovieGenres(genreListMoviesRes);
+//       })
+//       .catch(err => console.log(err));
+//   } else if (document.querySelector('#series.active-link')) {
+//     movie
+//       .genreListSeries()
+//       .then(genreListSeriesRes => {
+//         ui.printSeriesGenres(genreListSeriesRes);
+//       })
+//       .catch(err => console.log(err));
+//   }
+// }
 
 // event listener movies link Navbar
 document.getElementById('movies').addEventListener('click', () => {
@@ -349,7 +347,7 @@ function loadMore(e) {
     if (document.querySelector('#movies.active-link') && !userText) {
       moviesPage++;
       getMovies(moviesPage);
-      //printByGenre(moviesPage);
+      //printByGenre(moviesPage, genreId);
     } else if (document.querySelector('#series.active-link') && !userText) {
       seriesPage++;
       getSeries(seriesPage);
@@ -361,40 +359,36 @@ function loadMore(e) {
   }
 }
 
-//! PRINT BY GENRE
-// get access to genre list on nav
-document
-  .querySelector('.dropdown-menu')
-  .addEventListener('click', printByGenre);
+// //! PRINT BY GENRE
+// // get access to genre list on nav
+// document
+//   .querySelector('.dropdown-menu')
+//   .addEventListener('click', printByGenre);
 
-function printByGenre(e) {
-  // clean dom from previous movies
-  document.querySelector('.grid').innerHTML = '';
-  // clean search input
-  ui.clearInput();
-  // fetch the data-genre of each link
-  const genreId = e.target.dataset.genre;
+// function printByGenre(e, moviesPage, genreId) {
+//   // clean dom from previous movies
+//   document.querySelector('.grid').innerHTML = '';
+//   // clean search input
+//   ui.clearInput();
+//   // fetch the data-genre of each link
+//   const genreId = e.target.dataset.genre;
+//   // on click of each sent data to api call
+//   if (document.querySelector('#movies.active-link')) {
+//     //! movies genres
+//     movie
+//       .movieGenre(moviesPage, genreId)
+//       .then(movieGenreRes => {
+//         ui.printMovieByGenre(movieGenreRes);
+//       })
+//       .catch(err => console.log(err));
+//   } else if (document.querySelector('#series.active-link')) {
+//     //! series genres
 
-  // on click of each sent data to api call
-  if (document.querySelector('#movies.active-link')) {
-    //! movies genres
-
-    movie
-      .movieGenre(moviesPage, genreId)
-      .then(movieGenreRes => {
-        ui.printMovieByGenre(movieGenreRes);
-        console.log(movieGenreRes);
-      })
-      .catch(err => console.log(err));
-  } else if (document.querySelector('#series.active-link')) {
-    //! series genres
-
-    movie
-      .serieGenre(seriesPage, genreId)
-      .then(serieGenreRes => {
-        ui.printSeriesByGenres(serieGenreRes);
-        //console.log(serieGenreRes);
-      })
-      .catch(err => console.log(err));
-  }
-}
+//     movie
+//       .serieGenre(genreId)
+//       .then(serieGenreRes => {
+//         ui.printSeriesByGenres(serieGenreRes);
+//       })
+//       .catch(err => console.log(err));
+//   }
+// }

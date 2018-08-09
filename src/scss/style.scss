@@ -388,6 +388,7 @@ p {
   height: auto;
 }
 
+//////////////////////////////////////
 .actorModal {
   animation-name: modalopen;
   animation-duration: 1s;
@@ -426,7 +427,7 @@ p {
     font-size: 1rem;
     color: #b9b9b9;
     line-height: 0;
-    padding: 10px 0 40px 0;
+    padding: 10px 0 20px 0;
     span {
       padding: 0 5px;
       color: #ff5252;
@@ -532,6 +533,7 @@ p {
   }
 }
 
+///////////////////////////////////
 @media (max-width: 320px) {
   .navbar {
     input[type=text]:focus {
@@ -596,6 +598,34 @@ p {
   .similar-btn {
     bottom: -200% !important;
   }
+  .actorModal {
+    .fa-times-circle {
+      top: 2%;
+      left: 2%;
+    }
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+    }
+    h2 {
+      font-size: 2.5rem;
+    }
+    h4 {
+      padding: 10px 0 20px 0;
+    }
+    .actor-pic {
+      .foto-gall {
+        padding: 0 0 15px 0;
+      }
+    }
+    .bio {
+      text-align: left;
+    }
+  }
+  .no-movie-found img {
+    width: 60%;
+    height: auto;
+  }
 }
 
 @media (max-width: 375px) {
@@ -622,27 +652,27 @@ p {
 @media (min-width: 1535.9px) {
   .myModal {
     .fa-times-circle {
-      font-size: 3rem;
+      font-size: 2rem;
       top: 2%;
       left: .8%;
     }
     .fa-imdb {
-      font-size: 3.5rem;
+      font-size: 3rem;
       left: 1%;
       bottom: 3%;
     }
     .fa-amazon {
-      font-size: 3.5rem;
+      font-size: 3rem;
       left: 5%;
       bottom: 3%;
     }
     .icon-netflix::before {
-      font-size: 3.2rem;
+      font-size: 2.7rem;
       left: 9%;
       bottom: 3.3%;
     }
     .fa-globe {
-      font-size: 3.4rem;
+      font-size: 2.8rem;
       left: 13%;
       bottom: 3%;
     }
@@ -651,14 +681,15 @@ p {
       overflow: scroll;
     }
     h2 {
-      font-size: 5.2rem;
+      font-size: 4.6rem;
       padding-top: 10px;
+      padding-bottom: 20px;
     }
     h4 {
-      font-size: 1.9rem;
+      font-size: 1.6rem;
     }
     p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       line-height: 1.9rem;
       letter-spacing: 2px;
       span {
@@ -679,14 +710,14 @@ p {
       }
     }
     .badge-pill {
-      padding: .5rem 1rem .5rem 1rem;
+      padding: .3rem 1rem .3rem 1rem;
       font-size: 1rem;
     }
     .genres {
       padding-top: 10px;
     }
     .trailer-btn {
-      font-size: 1.6rem;
+      font-size: 1.2rem;
     }
     .video-container {
       background-color: rgba(0, 0, 0, .8);
@@ -708,8 +739,12 @@ p {
       display: block;
     }
     .similar-btn {
-      font-size: 1.6rem;
+      font-size: 1.2rem;
     }
+  }
+  .no-movie-found img {
+    width: 40%;
+    height: auto;
   }
 }
 
@@ -725,13 +760,14 @@ p {
     h2 {
       font-size: 6.2rem;
       padding-top: 30px;
+      padding-bottom: 2rem;
     }
     h4 {
       font-size: 2.3rem;
     }
     p {
       font-size: 1.4rem;
-      line-height: 1.9rem;
+      line-height: 2.2rem;
       letter-spacing: 2px;
       span {
         font-size: 1.6rem;
@@ -751,6 +787,54 @@ p {
         }
       }
     }
+  }
+  .actorModal {
+    .fa-times-circle {
+      top: 2%;
+      left: 1%;
+      font-size: 3.5rem;
+    }
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+    }
+    h2 {
+      font-size: 4rem;
+      padding: .5rem 0 1.4rem 0;
+    }
+    h4 {
+      padding: 10px 0 20px 0;
+      font-size: 1.4rem;
+    }
+    .actor-pic {
+      .foto-gall {
+        padding: 1px;
+      }
+      i {
+        font-size: 5rem;
+      }
+    }
+    .bio {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+      text-align: justify;
+    }
+    h3 {
+      font-size: 3rem;
+    }
+    .cr-title {
+      font-size: 1.2rem;
+    }
+    .role {
+      font-size: 1.2rem;
+    }
+    .badge-year {
+      font-size: 1.2rem;
+    }
+  }
+  .no-movie-found img {
+    width: 50%;
+    height: auto;
   }
 }
 
