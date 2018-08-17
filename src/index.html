@@ -4,7 +4,7 @@
 <head>
   <title>Popcorn Style Online</title>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, height=device-height initial-scale=1, shrink-to-fit=no">
 
 
   <link rel="stylesheet" href="/css/bootstrap.css">
@@ -29,47 +29,51 @@
 
 
 
-  <nav class="navbar navbar-expand-xl fixed-top">
-    <div class="container-fluid">
+  <nav class="navbar navbar-expand-md fixed-top">
 
-      <ul class="MyNav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="print-genres">
-          <div class="row">
-            <div class="col-md-12"></div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class=" container-fluid ">
+
+        <ul class="MyNav navbar-nav">
+
+          <!-- <div class="print-genres">
+            <div class="row">
+              <div class="col-md-12"></div>
+            </div>
+          </div> -->
+
+          <li class="nav-item">
+            <a class="nav-link active-link" href="#!" id="movies">Movies</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#!" id="series">Series</a>
+          </li>
+
+          <div class="dropdown ml-auto">
+            <button class="btn btn-md dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              Genres
+            </button>
+            <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton"></div>
           </div>
-        </div>
 
-        <li class="nav-item">
-          <a class="nav-link active-link" href="#!" id="movies">Movies</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#!" id="series">Series</a>
-        </li>
-      </ul>
+          <form class="form-search">
+            <div class="input-group">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search">
+            </div>
+          </form>
 
+        </ul>
 
-      <!-- <div class="dropdown ml-auto">
-        <button class="btn btn-md dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
-          Genres
-        </button>
-        <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton"></div>
-      </div> -->
-
-      <form class="form-search">
-        <label class="sr-only" for="inlineFormInputGroup">Search</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search">
-        </div>
-      </form>
-      <!-- </div> -->
-
-
-
-
+      </div>
     </div>
   </nav>
+
 
   <div class="container-fluid">
     <div class="grid row"></div>
